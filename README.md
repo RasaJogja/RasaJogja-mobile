@@ -94,3 +94,12 @@ Pada aplikasi kami, terdapat dua jenis pengguna:
 - Pengguna Umum
 
 Penjelasan lebih rinci tentang setiap jenis pengguna dan hak aksesnya dalam aplikasi disampaikan pada deskripsi masing-masing modul.
+
+## Alur Pengintegrasian dengan Aplikasi Web
+
+Pada proses pengintegrasian antara Django dengan Flutter, kami akan melakukan beberapa hal berikut:
+
+1. Menambahkan package/library http kepada proyek agar aplikasi dapat berinteraksi dengan aplikasi web.
+2. Menggunakan model autentikasi berupa login, logout, dan registrasi yang telah dibuat pada TK sebelumnya agar bisa memberikan user otorisasi yang sesuai peran user sebagai reader atau writer.
+3. Memanfaatkan package/library pbp_django_auth untuk mengelola cookie sehingga segala macam request yang dikirimkan ke server merupakan request yang terautentikasi dan terotorisasi.
+4. Membuat class Katalog pada Flutter dengan memanfaatkan API dataset buku yang telah dibuat sebagai endpoint-nya, serta memanfaatkan 'https://app.quicktype.io/' untuk mengubah data JSON menjadi objek Dart yang akan digunakan untuk membuat kelas Katalog pada Flutter.
