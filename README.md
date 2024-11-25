@@ -99,7 +99,7 @@ Penjelasan lebih rinci tentang setiap jenis pengguna dan hak aksesnya dalam apli
 
 Pada proses pengintegrasian antara Django dengan Flutter, kami akan melakukan beberapa hal berikut:
 
-1. Menambahkan package/library http kepada proyek agar aplikasi dapat berinteraksi dengan aplikasi web.
-2. Menggunakan model autentikasi berupa login, logout, dan registrasi yang telah dibuat pada TK sebelumnya agar bisa memberikan user otorisasi yang sesuai peran user sebagai reader atau writer.
-3. Memanfaatkan package/library pbp_django_auth untuk mengelola cookie sehingga segala macam request yang dikirimkan ke server merupakan request yang terautentikasi dan terotorisasi.
-4. Membuat class Katalog pada Flutter dengan memanfaatkan API dataset buku yang telah dibuat sebagai endpoint-nya, serta memanfaatkan 'https://app.quicktype.io/' untuk mengubah data JSON menjadi objek Dart yang akan digunakan untuk membuat kelas Katalog pada Flutter.
+1. Menambahkan Library HTTP: Untuk memungkinkan aplikasi Flutter terhubung dan berkomunikasi dengan aplikasi web Django, kami akan menambahkan library http ke proyek.
+2. Menggunakan Sistem Autentikasi: Fitur login, logout, dan registrasi yang sudah dibuat sebelumnya akan diterapkan. Sistem ini memastikan setiap pengguna mendapatkan akses sesuai dengan perannya, apakah sebagai pembaca atau penulis.
+3. Mengelola Cookie dengan pbp_django_auth: Library ini akan membantu mengatur cookie autentikasi, sehingga setiap permintaan yang dikirim ke server berasal dari pengguna yang sudah terverifikasi dan punya izin yang benar.
+4. Membuat Kelas Katalog di Flutter: Kami akan membuat kelas Katalog menggunakan data buku dari API. Untuk mempermudah, kami akan menggunakan alat https://app.quicktype.io/ untuk mengonversi data JSON menjadi objek Dart yang siap digunakan.
