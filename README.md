@@ -97,7 +97,7 @@ Penjelasan lebih rinci tentang setiap jenis pengguna dan hak aksesnya dalam apli
 
 ## Alur Pengintegrasian dengan Aplikasi Web
 
-Pada proses pengintegrasian antara Django dengan Flutter, kami akan melakukan beberapa hal berikut:
+Saat menghubungkan Django dengan Flutter, kami akan melakukan beberapa langkah berikut:
 
 1. Menambahkan Library HTTP: Untuk memungkinkan aplikasi Flutter terhubung dan berkomunikasi dengan aplikasi web Django, kami akan menambahkan library http ke proyek.
 2. Menggunakan Sistem Autentikasi: Fitur login, logout, dan registrasi yang sudah dibuat sebelumnya akan diterapkan. Sistem ini memastikan setiap pengguna mendapatkan akses sesuai dengan perannya, apakah sebagai pembaca atau penulis.
