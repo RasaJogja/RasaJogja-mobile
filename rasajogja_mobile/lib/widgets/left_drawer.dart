@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rasajogja_mobile/menu.dart';
+import 'package:rasajogja_mobile/screens/menu.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
