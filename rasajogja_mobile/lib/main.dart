@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:rasajogja_mobile/screens/auth/login.dart';
+import 'package:rasajogja_mobile/main_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
         title: 'RasaJogja',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.deepPurple,
-          ).copyWith(secondary: Colors.deepPurple[400]),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Color(0xFFAF8F6F),
+          ).copyWith(secondary: Color(0xFFE7D4B5)),
         ),
-        home: const LoginPage(),
+        home: const MainView(),
       ),
     );
   }
