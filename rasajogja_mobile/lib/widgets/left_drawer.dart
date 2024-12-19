@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rasajogja_mobile/menu.dart';
 import 'package:rasajogja_mobile/screens/chat/list_chat_entry.dart';
+import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -55,10 +56,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Lihat Product'),
             // Bagian redirection ke MoodEntryFormPage
             onTap: () {
-              /*
-                TODO: Buatlah routing ke MoodEntryFormPage di sini,
-                setelah halaman MoodEntryFormPage sudah dibuat.
-                */
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductEntryPage()));
             },
           ),
           ListTile(
