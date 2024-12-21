@@ -7,6 +7,7 @@ import 'package:rasajogja_mobile/widgets/left_drawer.dart';
 import 'package:rasajogja_mobile/models/katalog/katalog.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:http/http.dart' as http;
+import 'package:rasajogja_mobile/screens/review/review_page.dart';
 
 class ProductEntryPage extends StatefulWidget {
   const ProductEntryPage({super.key});
@@ -16,7 +17,7 @@ class ProductEntryPage extends StatefulWidget {
 }
 
 class _ProductEntryPageState extends State<ProductEntryPage>
-  
+
   with SingleTickerProviderStateMixin {
   String selectedCategory = 'All';
   bool sortAscending = true;
@@ -68,10 +69,10 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
   Future<void> addBookmark(int productId, int userId) async {
   final url = Uri.parse('http://127.0.0.1:8000/add_flutter/$productId/');
-  
+
   // Data yang dikirimkan
   final body = {'user_id': userId.toString()};
-  
+
   try {
     final response = await http.post(
       url,
@@ -203,106 +204,119 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
   Widget _buildProductCard(KatalogResponse product) {
     final colorScheme = Theme.of(context).colorScheme;
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Hero(
-                      tag: 'product-${product.pk}',
-                      child: Image.network(
-                        product.fields.urlGambar,
-                        height: 150,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(
-                          height: 150,
-                          color: Colors.grey[200],
-                          child: const Icon(Icons.broken_image,
-                              size: 50, color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            product.fields.nama,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Rp ${product.fields.harga.toString().replaceAllMapped(
-                                  RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                  (Match m) => '${m[1]}.',
-                                )}',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          _buildInfoRow(
-                              Icons.restaurant, product.fields.namaRestoran),
-                          const SizedBox(height: 4),
-                          _buildInfoRow(
-                              Icons.location_on, product.fields.lokasi),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      categoryToString(product.fields.kategori),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ReviewPage(
+              productId: product.pk,
+              productName: product.fields.nama,
             ),
           ),
         );
       },
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Hero(
+                        tag: 'product-${product.pk}',
+                        child: Image.network(
+                          product.fields.urlGambar,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Container(
+                            height: 150,
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.broken_image,
+                                size: 50, color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.fields.nama,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Rp ${product.fields.harga.toString().replaceAllMapped(
+                                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                    (Match m) => '${m[1]}.',
+                                  )}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            _buildInfoRow(
+                                Icons.restaurant, product.fields.namaRestoran),
+                            const SizedBox(height: 4),
+                            _buildInfoRow(
+                                Icons.location_on, product.fields.lokasi),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        categoryToString(product.fields.kategori),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
