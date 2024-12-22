@@ -65,11 +65,10 @@ class _ProductEntryPageState extends State<ProductEntryPage>
     }
   }
 
-  Future<void> addBookmark(int productId, int userId) async {
-    final url = Uri.parse('http://127.0.0.1:8000/add_flutter/$productId/');
+  Future<void> addBookmark(int productId) async {
+    final url = Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
 
     // Data yang dikirimkan
-    final body = {'user_id': userId.toString()};
 
     try {
       final response = await http.post(
@@ -77,7 +76,6 @@ class _ProductEntryPageState extends State<ProductEntryPage>
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(body),
       );
 
       // Cek status response
@@ -289,6 +287,28 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                         ),
                       ),
                     ],
+                  ),
+                  Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.bookmark_add,
+                          color: colorScheme.secondary,
+                        ),
+                        onPressed: () {
+                          addBookmark(product.pk);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Bookmark added!'),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                   ),
                   Positioned(
                     top: 8,

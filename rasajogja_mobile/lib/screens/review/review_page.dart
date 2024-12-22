@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'add_review_page.dart';
@@ -29,6 +30,32 @@ class _ReviewPageState extends State<ReviewPage> {
     super.initState();
     _reviews = fetchReviews();
   }
+
+  Future<void> addBookmark(int productId) async {
+  final url = Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 201) {
+      final responseData = jsonDecode(response.body);
+      print('Bookmark added: ${responseData['message']}');
+    } else if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      print('Bookmark already exists: ${responseData['message']}');
+    } else {
+      throw Exception('Error: ${response.statusCode} ${response.body}');
+    }
+  } catch (e) {
+    print('Exception occurred: $e');
+    rethrow; // Lempar ulang error untuk ditangani di UI
+  }
+}
 
   Future<ReviewResponse> fetchReviews() async {
     final request = context.read<CookieRequest>();
@@ -91,7 +118,22 @@ class _ReviewPageState extends State<ReviewPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFAB886D),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          await addBookmark(widget.productId);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Bookmark added successfully!'),
+                            ),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Failed to add bookmark: $e'),
+                            ),
+                          );
+                        }
+                      },
                       child: const Text(
                         'Bookmark',
                         style: TextStyle(color: Colors.white),
