@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:rasajogja_mobile/screens/chat/training_screen.dart';
 import 'package:rasajogja_mobile/utils/mainpage_theme.dart';
 import 'package:rasajogja_mobile/models/mainpage/tabIcon_data.dart';
 import 'package:flutter/material.dart';
@@ -138,10 +139,10 @@ class _BottomBarViewState extends State<BottomBarView>
                     child: Container(
                       // alignment: Alignment.center,s
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyDarkBlue,
+                        color: FitnessAppTheme.lightbrown,
                         gradient: LinearGradient(
                             colors: [
-                              FitnessAppTheme.nearlyDarkBlue,
+                              FitnessAppTheme.lightbrown,
                               HexColor('#6A88E5'),
                             ],
                             begin: Alignment.topLeft,
@@ -149,8 +150,8 @@ class _BottomBarViewState extends State<BottomBarView>
                         shape: BoxShape.circle,
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: FitnessAppTheme.nearlyDarkBlue
-                                  .withOpacity(0.4),
+                              color:
+                                  FitnessAppTheme.lightbrown.withOpacity(0.4),
                               offset: const Offset(8.0, 16.0),
                               blurRadius: 16.0),
                         ],
@@ -161,9 +162,18 @@ class _BottomBarViewState extends State<BottomBarView>
                           splashColor: Colors.white.withOpacity(0.1),
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
-                          onTap: widget.addClick,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TrainingScreen(
+                                  animationController: animationController,
+                                ),
+                              ),
+                            );
+                          },
                           child: Icon(
-                            Icons.add,
+                            Icons.chat_bubble,
                             color: FitnessAppTheme.white,
                             size: 32,
                           ),
@@ -268,7 +278,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyDarkBlue,
+                        color: FitnessAppTheme.lightbrown,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -289,7 +299,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 4,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyDarkBlue,
+                        color: FitnessAppTheme.lightbrown,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -310,7 +320,7 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: FitnessAppTheme.nearlyDarkBlue,
+                        color: FitnessAppTheme.lightbrown,
                         shape: BoxShape.circle,
                       ),
                     ),

@@ -17,6 +17,7 @@ class ProductEntryPage extends StatefulWidget {
 
 class _ProductEntryPageState extends State<ProductEntryPage>
     with SingleTickerProviderStateMixin {
+  Map<int, bool> bookmarkedProducts = {};
   String selectedCategory = 'All';
   bool sortAscending = true;
   String searchQuery = '';
@@ -29,6 +30,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+    loadBookmarkedProducts();
   }
 
   @override
@@ -65,11 +67,9 @@ class _ProductEntryPageState extends State<ProductEntryPage>
     }
   }
 
-  Future<void> addBookmark(int productId, int userId) async {
-    final url = Uri.parse('http://127.0.0.1:8000/add_flutter/$productId/');
-
-    // Data yang dikirimkan
-    final body = {'user_id': userId.toString()};
+  Future<void> addBookmark(int productId) async {
+    final url =
+        Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
 
     try {
       final response = await http.post(
@@ -77,18 +77,40 @@ class _ProductEntryPageState extends State<ProductEntryPage>
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode(body),
       );
 
-      // Cek status response
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        setState(() {
+          bookmarkedProducts[productId] = true;
+        });
         final responseData = jsonDecode(response.body);
-        print('Bookmark added: ${responseData['message']}');
-      } else if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print('Bookmark already exists: ${responseData['message']}');
+        print('Bookmark status: ${responseData['message']}');
       } else {
-        print('Error: ${response.statusCode} ${response.body}');
+        throw Exception('Error: ${response.statusCode} ${response.body}');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> loadBookmarkedProducts() async {
+    final url = Uri.parse('http://127.0.0.1:8000/bookmark/list_flutter/');
+
+    try {
+      final response = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body) as List;
+        setState(() {
+          for (var item in data) {
+            bookmarkedProducts[item['product_id']] = true;
+          }
+        });
+      } else {
+        throw Exception('Error loading bookmarks: ${response.statusCode}');
       }
     } catch (e) {
       print('Exception occurred: $e');
@@ -291,6 +313,45 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                     ],
                   ),
                   Positioned(
+                    bottom: 8,
+                    right: 8,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            bookmarkedProducts[product.pk] == true
+                                ? Icons.bookmark
+                                : Icons.bookmark_add_outlined,
+                            color: bookmarkedProducts[product.pk] == true
+                                ? Colors
+                                    .brown // Warna untuk produk yang sudah di-bookmark
+                                : colorScheme.primary, // Warna default
+                          ),
+                          onPressed: () async {
+                            await addBookmark(
+                                product.pk); // Tunggu hingga proses selesai
+                          },
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: colorScheme.primary.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            categoryToString(product.fields.kategori),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
                     top: 8,
                     right: 8,
                     child: Container(
@@ -342,7 +403,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Discover Foods'),
+        title: const Text("Today's Culinary"),
         backgroundColor: colorScheme.primary,
         elevation: 0,
       ),
@@ -383,12 +444,14 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                       : b.fields.harga.compareTo(a.fields.harga));
 
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(8), // Kurangi padding grid
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).size.width ~/ 280,
-                      childAspectRatio: 0.8,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
+                      crossAxisCount: MediaQuery.of(context).size.width ~/
+                          200, // Perkecil kartu
+                      childAspectRatio: 0.7, // Proporsi kartu lebih ramping
+                      crossAxisSpacing:
+                          8, // Kurangi jarak horizontal antar kartu
+                      mainAxisSpacing: 8, // Kurangi jarak vertikal antar kartu
                     ),
                     itemCount: products.length,
                     itemBuilder: (context, index) =>

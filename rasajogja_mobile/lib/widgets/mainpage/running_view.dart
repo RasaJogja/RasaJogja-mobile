@@ -78,8 +78,7 @@ class RunningView extends StatelessWidget {
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
                                             letterSpacing: 0.0,
-                                            color:
-                                                FitnessAppTheme.nearlyDarkBlue,
+                                            color: FitnessAppTheme.lightbrown,
                                           ),
                                         ),
                                       ),

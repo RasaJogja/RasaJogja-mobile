@@ -23,10 +23,10 @@ class WorkoutView extends StatelessWidget {
                   left: 24, right: 24, top: 16, bottom: 18),
               child: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    FitnessAppTheme.nearlyDarkBlue,
-                    HexColor("#6F56E8")
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  gradient: LinearGradient(
+                      colors: [FitnessAppTheme.lightbrown, HexColor("#543A14")],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       bottomLeft: Radius.circular(8.0),
@@ -120,7 +120,7 @@ class WorkoutView extends StatelessWidget {
                                 padding: const EdgeInsets.all(0.0),
                                 child: Icon(
                                   Icons.touch_app,
-                                  color: HexColor("#6F56E8"),
+                                  color: HexColor("#543A14"),
                                   size: 44,
                                 ),
                               ),

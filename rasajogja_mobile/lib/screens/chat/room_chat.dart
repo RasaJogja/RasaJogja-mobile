@@ -26,10 +26,9 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
   @override
   void initState() {
     super.initState();
-    fetchMessages(); // Fetch existing messages when page loads
+    fetchMessages();
   }
 
-  // Function to fetch existing messages
   Future<void> fetchMessages() async {
     try {
       final url =
@@ -57,6 +56,44 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
       }
     } catch (e) {
       print("Error fetching messages: $e");
+    }
+  }
+
+  Future<void> deleteMessage(String messageId) async {
+    try {
+      final url =
+          "http://127.0.0.1:8000/chat/delete-message-flutter/$messageId/";
+      print("Fetching messages from: $url");
+
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          messages.removeWhere((message) => message.pk.toString() == messageId);
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Message deleted successfully")),
+        );
+      } else {
+        final errorData = jsonDecode(response.body);
+        print('Error: ${errorData['error']}');
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(errorData['error'] ?? "Failed to delete message")),
+        );
+      }
+    } catch (e) {
+      print('Delete error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${e.toString()}")),
+      );
     }
   }
 
@@ -150,11 +187,36 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                   defaultTextColor = Colors.black;
                   defaultTextPrefix = '';
                   defaultIcons = [
-                    // _renderVoiceWidget(message),
-                    // const SizedBox(width: 6),
-                    // _renderShareWidget(message),
-                    // const SizedBox(width: 8),
-                    // _renderCopyWidget(message),
+                    IconButton(
+                      icon: const Icon(Icons.delete, size: 20),
+                      color: Colors.red,
+                      onPressed: () {
+                        // Show confirmation dialog before deleting
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Delete Message"),
+                              content: const Text(
+                                  "Are you sure you want to delete this message?"),
+                              actions: [
+                                TextButton(
+                                  child: const Text("Cancel"),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                                TextButton(
+                                  child: const Text("Delete"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    deleteMessage(message.pk);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ];
                 }
 
@@ -218,7 +280,6 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                             MarkdownBody(
                               data:
                                   '$defaultTextPrefix${message.fields.content}',
-                              // data: 'This is a line\nThis is another line'.replaceAll('\n', '<br>'),
                               shrinkWrap: true,
                               selectable: true,
                               styleSheet: MarkdownStyleSheet(
@@ -270,7 +331,6 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                       icon: Icon(Icons.send),
                       color: Theme.of(context).colorScheme.primary,
                       onPressed: () async {
-                        // First check if _message is not null and not empty
                         if (_formKey.currentState!.validate() &&
                             _message.isNotEmpty) {
                           try {
@@ -309,7 +369,6 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                             );
                           }
                         } else {
-                          // Show error message if message is null or empty
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Pesan tidak boleh kosong")),

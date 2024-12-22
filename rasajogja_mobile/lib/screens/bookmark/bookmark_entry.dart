@@ -18,6 +18,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
+        print(responseData);
         return List<BookmarkedProduct>.from(
           responseData['bookmarked_products']
               .map((x) => BookmarkedProduct.fromJson(x)),

@@ -1,10 +1,10 @@
 import 'package:rasajogja_mobile/screens/bookmark/bookmark_entry.dart';
+import 'package:rasajogja_mobile/screens/forum/forum_page.dart';
 import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart';
 import 'package:rasajogja_mobile/utils/mainpage_theme.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/title_view.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/mediterranean_diet_view.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/meal_list_view.dart';
-import 'package:rasajogja_mobile/widgets/mainpage/body_measurement.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/glass_view.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/water_view.dart';
 import 'package:flutter/material.dart';
@@ -96,14 +96,25 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     );
 
     listViews.add(
-      TitleView(
-        titleTxt: "Today's Happening in Jogja Culinary",
-        subTxt: 'Forum',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 6, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ForumPage()),
+          );
+        },
+        child: TitleView(
+          titleTxt: "Today's Happening in Jogja Culinary",
+          subTxt: 'Forum',
+          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+              parent: widget.animationController!,
+              curve: const Interval((1 / count) * 6, 1.0,
+                  curve: Curves.fastOutSlowIn),
+            ),
+          ),
+          animationController: widget.animationController!,
+        ),
       ),
     );
 
@@ -135,39 +146,6 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve: const Interval((1 / count) * 1, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
-      ),
-    );
-
-    listViews.add(
-      GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const BookmarkPage()),
-          );
-        },
-        child: TitleView(
-          titleTxt: 'Body measurement',
-          subTxt: 'Today',
-          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-              parent: widget.animationController!,
-              curve: const Interval((1 / count) * 4, 1.0,
-                  curve: Curves.fastOutSlowIn),
-            ),
-          ),
-          animationController: widget.animationController!,
-        ),
-      ),
-    );
-
-    listViews.add(
-      BodyMeasurementView(
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 5, 1.0,
                 curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController!,
       ),

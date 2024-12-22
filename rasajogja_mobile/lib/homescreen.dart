@@ -1,6 +1,7 @@
 import 'package:rasajogja_mobile/models/mainpage/tabIcon_data.dart';
-import 'package:rasajogja_mobile/screens/chat/training_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:rasajogja_mobile/screens/forum/forum_page.dart';
+import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/bottom_bar_view.dart';
 import 'package:rasajogja_mobile/utils/mainpage_theme.dart';
 import 'package:rasajogja_mobile/screens/mainpage/mainpage.dart';
@@ -79,7 +80,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
-            if (index == 0 || index == 2) {
+            if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -89,14 +90,31 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                       MyDiaryScreen(animationController: animationController);
                 });
               });
-            } else if (index == 1 || index == 3) {
+            } else if (index == 1) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      TrainingScreen(animationController: animationController);
+                  tabBody = const ForumPage();
+                });
+              });
+            } else if (index == 2) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = const ProductEntryPage();
+                });
+              });
+            } else if (index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = const ProductEntryPage();
                 });
               });
             }

@@ -87,7 +87,7 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
             new ClipPath(
               child: new Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyDarkBlue.withOpacity(0.5),
+                  color: FitnessAppTheme.lightbrown.withOpacity(0.5),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(80.0),
                       bottomLeft: Radius.circular(80.0),
@@ -95,8 +95,8 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
                       topRight: Radius.circular(80.0)),
                   gradient: LinearGradient(
                     colors: [
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.2),
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.5)
+                      FitnessAppTheme.lightbrown.withOpacity(0.2),
+                      FitnessAppTheme.lightbrown.withOpacity(0.5)
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -108,11 +108,11 @@ class _WaveViewState extends State<WaveView> with TickerProviderStateMixin {
             new ClipPath(
               child: new Container(
                 decoration: BoxDecoration(
-                  color: FitnessAppTheme.nearlyDarkBlue,
+                  color: FitnessAppTheme.lightbrown,
                   gradient: LinearGradient(
                     colors: [
-                      FitnessAppTheme.nearlyDarkBlue.withOpacity(0.4),
-                      FitnessAppTheme.nearlyDarkBlue
+                      FitnessAppTheme.lightbrown.withOpacity(0.4),
+                      FitnessAppTheme.lightbrown
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
