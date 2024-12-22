@@ -298,6 +298,31 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                     ),
                   ),
                 ),
+                 Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.bookmark_border),
+                      color: colorScheme.primary,
+                      onPressed: () async {
+                        final userId = 1; // Ganti dengan ID pengguna yang sesuai
+                        await addBookmark(product.pk, userId);
+                      },
+                    ),
+                  ),
+                 ),
               ],
             ),
           ),
