@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rasajogja_mobile/homescreen.dart';
 import 'package:http/http.dart' as http;
+import 'package:rasajogja_mobile/screens/auth/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.controller});
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: const InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Username',
                         labelStyle: TextStyle(
                           color: Color(0xFF755DC1),
                           fontSize: 15,
@@ -269,9 +270,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            widget.controller.animateToPage(1,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    RegisterPage(controller: PageController()),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Sign Up',
@@ -288,15 +293,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                        color: Color(0xFF755DC1),
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+
                     const SizedBox(
                       height: 20,
                     ), // Added bottom padding
