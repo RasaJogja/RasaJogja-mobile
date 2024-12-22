@@ -65,10 +65,11 @@ class _ProductEntryPageState extends State<ProductEntryPage>
     }
   }
 
-  Future<void> addBookmark(int productId) async {
-    final url = Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
+  Future<void> addBookmark(int productId, int userId) async {
+    final url = Uri.parse('http://127.0.0.1:8000/add_flutter/$productId/');
 
     // Data yang dikirimkan
+    final body = {'user_id': userId.toString()};
 
     try {
       final response = await http.post(
@@ -76,6 +77,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
         headers: {
           'Content-Type': 'application/json',
         },
+        body: jsonEncode(body),
       );
 
       // Cek status response
@@ -289,28 +291,6 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                     ],
                   ),
                   Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.bookmark_add,
-                          color: colorScheme.secondary,
-                        ),
-                        onPressed: () {
-                          addBookmark(product.pk);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Bookmark added!'),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  ),
-                  Positioned(
                     top: 8,
                     right: 8,
                     child: Container(
@@ -362,7 +342,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Discover Foods'),
+        title: const Text("Today's Culinary"),
         backgroundColor: colorScheme.primary,
         elevation: 0,
       ),
@@ -403,12 +383,14 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                       : b.fields.harga.compareTo(a.fields.harga));
 
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(8), // Kurangi padding grid
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).size.width ~/ 280,
-                      childAspectRatio: 0.8,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
+                      crossAxisCount: MediaQuery.of(context).size.width ~/
+                          200, // Perkecil kartu
+                      childAspectRatio: 0.7, // Proporsi kartu lebih ramping
+                      crossAxisSpacing:
+                          8, // Kurangi jarak horizontal antar kartu
+                      mainAxisSpacing: 8, // Kurangi jarak vertikal antar kartu
                     ),
                     itemCount: products.length,
                     itemBuilder: (context, index) =>
