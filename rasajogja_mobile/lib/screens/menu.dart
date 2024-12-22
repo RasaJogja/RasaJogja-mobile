@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rasajogja_mobile/screens/firstpage.dart';
 import 'package:rasajogja_mobile/widgets/left_drawer.dart';
 import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart'; 
 
@@ -128,6 +129,12 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const ProductEntryPage(),
               ),
             );
+          } else if (item.name == "Logout") {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const FirstPage()),
+              (route) => false, // Menghapus semua route sebelumnya
+            );
           } else {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
@@ -135,6 +142,7 @@ class ItemCard extends StatelessWidget {
                 SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!")),
               );
           }
+
         },
         child: Container(
           padding: const EdgeInsets.all(8),

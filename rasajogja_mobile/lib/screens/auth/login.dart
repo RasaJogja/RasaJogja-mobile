@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:rasajogja_mobile/screens/menu.dart';
+import 'package:rasajogja_mobile/screens/firstpage.dart';
+import 'package:rasajogja_mobile/screens/auth/register.dart'; // Import RegisterPage
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.controller});
@@ -37,13 +39,27 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15, top: 15),
-                child: Image.asset(
-                  "assets/images/vector-1.png",
-                  width: 413,
-                  height: 457,
-                ),
+              Stack(
+                children: [
+                  Image.asset(
+                    "assets/images/vector-0.png",
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40, left: 20),
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FirstPage(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 18),
               Padding(
@@ -53,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Log In',
+                      'LOGIN',
                       style: TextStyle(
-                        color: Color(0xFF755DC1),
+                        color: Color(0xFF8D6E63),
                         fontSize: 27,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
@@ -78,9 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: const InputDecoration(
-                        labelText: 'Email',
+                        labelText: 'Username',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -96,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -121,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -137,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -205,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() => _isLoading = false);
                                 },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF9F7BFF),
+                            backgroundColor: const Color(0xFF8D6E63),
                           ),
                           child: _isLoading
                               ? const SizedBox(
@@ -216,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 )
                               : const Text(
-                                  'Sign In',
+                                  'LOGIN',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
@@ -231,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: [
                         const Text(
-                          'Dont have an account?',
+                          'Don\'t have an account?',
                           style: TextStyle(
                             color: Color(0xFF837E93),
                             fontSize: 13,
@@ -242,16 +258,18 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(width: 2.5),
                         InkWell(
                           onTap: () {
-                            widget.controller.animateToPage(
-                              1,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.ease,
+                            // Navigate to RegisterPage
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterPage(controller: PageController()), // Navigate to RegisterPage
+                              ),
                             );
                           },
                           child: const Text(
-                            'Sign Up',
+                            'REGISTER',
                             style: TextStyle(
-                              color: Color(0xFF755DC1),
+                              color: Color(0xFF8D6E63),
                               fontSize: 13,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
@@ -259,16 +277,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                        color: Color(0xFF755DC1),
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
                     ),
                     const SizedBox(height: 20),
                   ],

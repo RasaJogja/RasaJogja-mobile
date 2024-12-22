@@ -24,7 +24,10 @@ class _AddReviewPageState extends State<AddReviewPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Review'),
+        title: const Text(
+          'Add Review',
+          style: TextStyle(color: Colors.white), // Warna teks putih
+        ),
         backgroundColor: const Color(0xFFAB886D),
       ),
       body: Form(
@@ -89,7 +92,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                 },
                 child: const Text(
                   'Submit Review',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Colors.white), // Warna teks putih
                 ),
               )
             ],

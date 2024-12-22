@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rasajogja_mobile/screens/auth/login.dart';
 import 'package:rasajogja_mobile/screens/auth/register.dart';
+import 'package:rasajogja_mobile/screens/firstpage.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -17,17 +18,15 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       body: PageView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 3,
+        itemCount: 3, // FirstPage, LoginPage, RegisterPage
         controller: controller,
         itemBuilder: (context, index) {
           if (index == 0) {
-            return LoginPage(
-              controller: controller,
-            );
+            return FirstPage(); // FirstPage sebagai halaman pertama
           } else if (index == 1) {
-            return RegisterPage(
-              controller: controller,
-            );
+            return LoginPage(controller: controller); // LoginPage
+          } else if (index == 2) {
+            return RegisterPage(controller: controller); // RegisterPage
           }
           return null;
         },

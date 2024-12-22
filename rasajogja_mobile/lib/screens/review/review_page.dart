@@ -49,8 +49,12 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.productName} Reviews'),
+        title: Text(
+        '${widget.productName} Reviews',
+        style: const TextStyle(color: Colors.white), // Warna teks putih
+        ),
         backgroundColor: const Color(0xFFAB886D),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
@@ -79,16 +83,19 @@ class _ReviewPageState extends State<ReviewPage> {
                           });
                         });
                       },
-                      child: const Text('Add Review'),
+                      child: const Text('Add Review',
+                      style: TextStyle(color: Colors.white), 
+                      ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFAB886D),
                       ),
                       onPressed: () {
-                        // Bookmark functionality will be implemented later
                       },
-                      child: const Text('Bookmark'),
+                      child: const Text('Bookmark',
+                      style: TextStyle(color: Colors.white), 
+                      ),
                     ),
                   ],
                 ),
