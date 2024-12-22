@@ -87,7 +87,7 @@ class _AddNewFormPage extends State<AddNewFormPage> {
                       ),
                     ),
                   ),
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Color(0xFF5B4636)),
                   onChanged: (value) => setState(() {
                     _title = value;
                   }),

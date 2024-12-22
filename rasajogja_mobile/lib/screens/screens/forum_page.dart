@@ -17,50 +17,19 @@ class ForumPage extends StatefulWidget {
 class _ForumPageState extends State<ForumPage> {
   late Future<List<ForumEntry>> _forumFuture;
 
+  @override
+  void initState() {
+    super.initState();
+    final request = Provider.of<CookieRequest>(context, listen: false);
+    _forumFuture = fetchForums(request);
+  }
+
   Future<List<ForumEntry>> fetchForums(CookieRequest request) async {
     final response =
         await request.get('http://127.0.0.1:8000/forum/get-forum-entries/');
     return List<ForumEntry>.from(
       response.map((data) => ForumEntry.fromJson(data)),
     );
-  }
-
-
-  void _showDeleteConfirmationDialog(ForumEntry forum) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Hapus Forum"),
-          content: const Text("Apakah Anda yakin ingin menghapus forum ini?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text("Batal"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                _deleteForum(forum); // Perform delete
-              },
-              child: const Text(
-                "Hapus",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    final request = Provider.of<CookieRequest>(context, listen: false);
-    _forumFuture = fetchForums(request);
   }
 
   Future<void> _refreshForums() async {
@@ -98,6 +67,36 @@ class _ForumPageState extends State<ForumPage> {
     }
   }
 
+  void _showDeleteConfirmationDialog(ForumEntry forum) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Hapus Forum"),
+          content: const Text("Apakah Anda yakin ingin menghapus forum ini?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Batal"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _deleteForum(forum);
+              },
+              child: const Text(
+                "Hapus",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,119 +125,108 @@ class _ForumPageState extends State<ForumPage> {
       drawer: LeftDrawer(),
       body: RefreshIndicator(
         onRefresh: _refreshForums,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TopPlacesSection(), // Add the Top Places Section
-              FutureBuilder<List<ForumEntry>>(
-                future: _forumFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'Belum ada forum, tambahkan sekarang!',
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    );
-                  } else {
-                    final forums = snapshot.data!;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          childAspectRatio: 1.2,
-                        ),
-                        itemCount: forums.length,
-                        itemBuilder: (context, index) {
-                          final forum = forums[index];
-                          return Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+        child: FutureBuilder<List<ForumEntry>>(
+          future: _forumFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  'Belum ada forum, tambahkan sekarang!',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+              );
+            } else {
+              final forums = snapshot.data!;
+              return GridView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 1.2,
+                ),
+                itemCount: forums.length,
+                itemBuilder: (context, index) {
+                  final forum = forums[index];
+                  return Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ForumDetailPage(forum: forum),
+                          ),
+                        );
+                      },
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  forum.fields.title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF5B4636),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  forum.fields.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF5B4636),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${forum.fields.commentsCount} Komentar',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF5B4636),
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ForumDetailPage(forum: forum),
-                                  ),
-                                );
-                              },
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          forum.fields.title,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF5B4636),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          forum.fields.description,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Color(0xFF5B4636),
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          '${forum.fields.commentsCount} Komentar',
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xFF5B4636),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (forum.fields.isAuthor)
-                                    Positioned(
-                                      top: 8,
-                                      right: 8,
-                                      child: IconButton(
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        ),
-                                        onPressed: () {
-                                          _showDeleteConfirmationDialog(forum);
-                                        },
-                                      ),
-                                    ),
-                                ],
+                          ),
+                          if (forum.fields.isAuthor)
+                            Positioned(
+                              top: 8,
+                              right: 8,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  _showDeleteConfirmationDialog(forum);
+                                },
                               ),
                             ),
-                          );
-                        },
+                        ],
                       ),
-                    );
-                  }
+                    ),
+                  );
                 },
-              ),
-            ],
-          ),
+              );
+            }
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -253,5 +241,4 @@ class _ForumPageState extends State<ForumPage> {
       ),
     );
   }
-
 }
