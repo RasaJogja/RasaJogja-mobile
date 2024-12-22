@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:rasajogja_mobile/firstpage.dart';
-import 'package:rasajogja_mobile/screens/auth/login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.controller});
@@ -29,36 +27,17 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Image.asset(
-                  "assets/images/vector-0.png", // Gambar utama
-                  width: double.infinity,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40, left: 20),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color(0xFF8D6E63),
-                      size: 30,
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const FirstPage(), // Navigasi ke FirstPage
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: Image.asset(
+                "assets/images/vector-2.png",
+                width: 428,
+                height: 457,
+              ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(
+              height: 18,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(
@@ -66,9 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'REGISTER',
+                    'Sign up',
                     style: TextStyle(
-                      color: Color(0xFF8D6E63),
+                      color: Color(0xFF755DC1),
                       fontSize: 27,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
@@ -91,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Username',
                         labelStyle: TextStyle(
-                          color: Color(0xFF8D6E63),
+                          color: Color(0xFF755DC1),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -100,14 +79,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF837E93),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF9F7BFF),
                           ),
                         ),
                       ),
@@ -135,13 +114,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             labelText: 'Password',
                             hintText: 'Create Password',
                             hintStyle: TextStyle(
-                              color: Color(0xFF8D6E63),
+                              color: Color(0xFF837E93),
                               fontSize: 10,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                             ),
                             labelStyle: TextStyle(
-                              color: Color(0xFF8D6E63),
+                              color: Color(0xFF755DC1),
                               fontSize: 15,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -151,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF8D6E63),
+                                color: Color(0xFF837E93),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -159,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF8D6E63),
+                                color: Color(0xFF9F7BFF),
                               ),
                             ),
                           ),
@@ -181,13 +160,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             labelText: 'Password',
                             hintText: 'Confirm Password',
                             hintStyle: TextStyle(
-                              color: Color(0xFF8D6E63),
+                              color: Color(0xFF837E93),
                               fontSize: 10,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                             ),
                             labelStyle: TextStyle(
-                              color: Color(0xFF8D6E63),
+                              color: Color(0xFF755DC1),
                               fontSize: 15,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -197,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF8D6E63),
+                                color: Color(0xFF837E93),
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -205,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF8D6E63),
+                                color: Color(0xFF9F7BFF),
                               ),
                             ),
                           ),
@@ -230,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         labelStyle: TextStyle(
-                          color: Color(0xFF8D6E63),
+                          color: Color(0xFF755DC1),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -239,14 +218,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF837E93),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF9F7BFF),
                           ),
                         ),
                       ),
@@ -268,7 +247,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         labelStyle: TextStyle(
-                          color: Color(0xFF8D6E63),
+                          color: Color(0xFF755DC1),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -277,14 +256,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF837E93),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF9F7BFF),
                           ),
                         ),
                       ),
@@ -332,6 +311,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               widget.controller.animateToPage(0,
                                   duration: const Duration(milliseconds: 500),
                                   curve: Curves.ease);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const LoginPage(),
+                              //   ),
+                              // );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -343,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8D6E63),
+                          backgroundColor: const Color(0xFF9F7BFF),
                         ),
                         child: const Text(
                           'Create account',
@@ -377,19 +362,14 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(
-                                  controller:
-                                      widget.controller), // Pass the controller
-                            ),
-                          );
+                          widget.controller.animateToPage(0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.ease);
                         },
                         child: const Text(
-                          'LOGIN',
+                          'Log In ',
                           style: TextStyle(
-                            color: Color(0xFF8D6E63),
+                            color: Color(0xFF755DC1),
                             fontSize: 13,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
