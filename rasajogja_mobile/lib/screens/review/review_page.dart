@@ -102,10 +102,18 @@ class _ReviewPageState extends State<ReviewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-        '${widget.productName} Reviews',
-        style: const TextStyle(color: Colors.white), // Warna teks putih
+          '${widget.productName} Reviews',
+          style: const TextStyle(color: Colors.white), // Warna teks putih
         ),
-        backgroundColor: const Color(0xFFAB886D),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF9C6F4A), Color(0xFFC89F94)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
