@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Color(0xFFAF8F6F),
-          ).copyWith(secondary: Color(0xFFE7D4B5)),
+            seedColor: const Color(0xFFAF8F6F),
+          ).copyWith(secondary: const Color(0xFFE7D4B5)),
         ),
         home: const MainView(),
       ),

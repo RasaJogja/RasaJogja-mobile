@@ -267,7 +267,7 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                   ),
                   const SizedBox(width: 8.0),
                   IconButton(
-                      icon: Icon(Icons.send),
+                      icon: const Icon(Icons.send),
                       color: Theme.of(context).colorScheme.primary,
                       onPressed: () async {
                         // First check if _message is not null and not empty
