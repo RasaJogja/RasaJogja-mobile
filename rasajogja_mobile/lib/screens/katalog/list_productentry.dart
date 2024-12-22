@@ -314,40 +314,42 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                     ],
                   ),
                   Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: Column(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          bookmarkedProducts[product.pk] == true
-                              ? Icons.bookmark
-                              : Icons.bookmark_add_outlined,
-                          color: bookmarkedProducts[product.pk] == true
-                              ? Colors.brown // Warna untuk produk yang sudah di-bookmark
-                              : colorScheme.primary, // Warna default
+                    bottom: 8,
+                    right: 8,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            bookmarkedProducts[product.pk] == true
+                                ? Icons.bookmark
+                                : Icons.bookmark_add_outlined,
+                            color: bookmarkedProducts[product.pk] == true
+                                ? Colors.brown // Warna untuk produk yang sudah di-bookmark
+                                : colorScheme.primary, // Warna default
+                          ),
+                          onPressed: () async {
+                            await addBookmark(product.pk); // Tunggu hingga proses selesai
+                          },
                         ),
-                        onPressed: () => addBookmark(product.pk),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          categoryToString(product.fields.kategori),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: colorScheme.primary.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            categoryToString(product.fields.kategori),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  ),
+
                   Positioned(
                     top: 8,
                     right: 8,
