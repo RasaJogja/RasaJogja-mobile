@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:rasajogja_mobile/forum/models/forum_model.dart';
-import 'package:rasajogja_mobile/forum/screens/add_new_form_page.dart';
-import 'package:rasajogja_mobile/forum/screens/forum_detail.dart';
-import 'package:rasajogja_mobile/forum/widgets/top_places.dart';
+import 'package:rasajogja_mobile/models/forum/forum_model.dart';
+import 'package:rasajogja_mobile/screens/forum/add_new_form_page.dart';
+import 'package:rasajogja_mobile/screens/forum/forum_detail.dart';
+import 'package:rasajogja_mobile/widgets/forum/top_places.dart';
 import 'package:rasajogja_mobile/widgets/left_drawer.dart';
 
 class ForumPage extends StatefulWidget {
@@ -124,7 +124,7 @@ class _ForumPageState extends State<ForumPage> {
           ),
         ),
       ),
-      drawer: LeftDrawer(),
+      drawer: const LeftDrawer(),
       body: RefreshIndicator(
         onRefresh: _refreshForums,
         child: FutureBuilder<List<ForumEntry>>(
@@ -135,8 +135,8 @@ class _ForumPageState extends State<ForumPage> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const CustomScrollView(
-                slivers: [
+              return CustomScrollView(
+                slivers: const [
                   SliverToBoxAdapter(
                     child: TopPlacesSection(),
                   ),
@@ -156,7 +156,7 @@ class _ForumPageState extends State<ForumPage> {
               final forums = snapshot.data!;
               return CustomScrollView(
                 slivers: [
-                  SliverToBoxAdapter(
+                  const SliverToBoxAdapter(
                     child: TopPlacesSection(),
                   ),
                   SliverPadding(
