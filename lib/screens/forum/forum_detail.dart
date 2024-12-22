@@ -22,7 +22,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
   Future<void> fetchForumComments(CookieRequest request) async {
     try {
       final response = await request.get(
-        'http://127.0.0.1:8000/forum/show-json-comment/${widget.forum.pk}/',
+        'https://rasajogja-production.up.railway.app/forum/show-json-comment/${widget.forum.pk}/',
       );
 
       if (response is Map<String, dynamic> && response.containsKey('comment')) {
@@ -58,7 +58,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
 
     try {
       final response = await request.postJson(
-        'http://127.0.0.1:8000/forum/add_comment_flutter/${widget.forum.pk}/',
+        'https://rasajogja-production.up.railway.app/forum/add_comment_flutter/${widget.forum.pk}/',
         jsonEncode(data),
       );
 

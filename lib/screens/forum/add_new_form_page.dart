@@ -157,7 +157,7 @@ class _AddNewFormPage extends State<AddNewFormPage> {
                       if (_formKey.currentState!.validate()) {
                         // Create new article
                         final response = await request.postJson(
-                          "http://127.0.0.1:8000/forum/create-forum-flutter/",
+                          "https://rasajogja-production.up.railway.app/forum/create-forum-flutter/",
                           jsonEncode(<String, String>{
                             'title': _title,
                             'description': _description,

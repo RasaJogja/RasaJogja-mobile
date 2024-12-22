@@ -42,7 +42,7 @@ class AreaListView extends StatelessWidget {
                             try {
                               final response = await http.post(
                                 Uri.parse(
-                                    "http://127.0.0.1:8000/chat/handle-room-flutter/"),
+                                    "https://rasajogja-production.up.railway.app/chat/handle-room-flutter/"),
                                 headers: {
                                   "Content-Type": "application/json",
                                 },

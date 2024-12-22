@@ -12,7 +12,7 @@ class BookmarkPage extends StatefulWidget {
 class _BookmarkPageState extends State<BookmarkPage> {
   Future<List<BookmarkedProduct>> fetchBookmarks() async {
     final url = Uri.parse(
-        'http://127.0.0.1:8000/bookmark/bookmarked-products_flutter/');
+        'https://rasajogja-production.up.railway.app/bookmark/bookmarked-products_flutter/');
     try {
       final response = await http.get(url);
 
@@ -34,7 +34,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
 
   Future<void> deleteBookmark(int productId) async {
     final url =
-        Uri.parse('http://127.0.0.1:8000/bookmark/remove_flutter/$productId/');
+        Uri.parse('https://rasajogja-production.up.railway.app/bookmark/remove_flutter/$productId/');
     try {
       final response = await http.post(url);
 

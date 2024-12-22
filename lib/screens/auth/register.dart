@@ -290,7 +290,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ElevatedButton(
                         onPressed: () async {
                           final response = await request.postJson(
-                            "http://127.0.0.1:8000/auth/register/",
+                            "https://rasajogja-production.up.railway.app/auth/register/",
                             jsonEncode({
                               "username": _usernameController.text,
                               "password1": _passwordController.text,

@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final client = http.Client();
     try {
-      var uri = Uri.parse("http://127.0.0.1:8000/auth/login/");
+      var uri = Uri.parse("https://rasajogja-production.up.railway.app/auth/login/");
       final response = await client.post(
         uri,
         headers: {'Content-Type': 'application/json'},

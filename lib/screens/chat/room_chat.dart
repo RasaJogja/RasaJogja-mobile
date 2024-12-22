@@ -32,7 +32,7 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
   Future<void> fetchMessages() async {
     try {
       final url =
-          "http://127.0.0.1:8000/chat/get-messages-flutter/${widget.chatId}/";
+          "https://rasajogja-production.up.railway.app/chat/get-messages-flutter/${widget.chatId}/";
       print("Fetching messages from: $url");
 
       final response = await http.get(
@@ -62,7 +62,7 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
   Future<void> deleteMessage(String messageId) async {
     try {
       final url =
-          "http://127.0.0.1:8000/chat/delete-message-flutter/$messageId/";
+          "https://rasajogja-production.up.railway.app/chat/delete-message-flutter/$messageId/";
       print("Fetching messages from: $url");
 
       final response = await http.delete(
@@ -336,7 +336,7 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                           try {
                             final response = await http.post(
                               Uri.parse(
-                                  "http://127.0.0.1:8000/chat/send-message-flutter/"),
+                                  "https://rasajogja-production.up.railway.app/chat/send-message-flutter/"),
                               headers: <String, String>{
                                 'Content-Type':
                                     'application/json; charset=UTF-8',

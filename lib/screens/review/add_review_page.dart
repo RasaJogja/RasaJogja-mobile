@@ -72,7 +72,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final response = await request.post(
-                      'http://localhost:8000/review/api/product/${widget.productId}/add/',
+                      'https://rasajogja-production.up.railway.app/review/api/product/${widget.productId}/add/',
                       jsonEncode({
                         'review_text': _reviewController.text,
                       }),

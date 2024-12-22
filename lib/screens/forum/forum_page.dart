@@ -25,7 +25,7 @@ class _ForumPageState extends State<ForumPage> {
 
   Future<List<ForumEntry>> fetchForums(CookieRequest request) async {
     final response =
-        await request.get('http://127.0.0.1:8000/forum/get-forum-entries/');
+        await request.get('https://rasajogja-production.up.railway.app/forum/get-forum-entries/');
     return List<ForumEntry>.from(
       response.map((data) => ForumEntry.fromJson(data)),
     );
@@ -41,7 +41,7 @@ class _ForumPageState extends State<ForumPage> {
   void _deleteForum(ForumEntry forum) async {
     final request = Provider.of<CookieRequest>(context, listen: false);
     final deleteUrl =
-        'http://127.0.0.1:8000/forum/delete-forum-flutter/${forum.pk}/';
+        'https://rasajogja-production.up.railway.app/forum/delete-forum-flutter/${forum.pk}/';
 
     try {
       final response = await request.post(deleteUrl, {});

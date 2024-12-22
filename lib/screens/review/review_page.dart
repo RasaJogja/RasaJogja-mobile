@@ -27,7 +27,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Future<void> addBookmark(int productId) async {
     final url =
-        Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
+        Uri.parse('https://rasajogja-production.up.railway.app/bookmark/add_flutter/$productId/');
 
     try {
       final response = await http.post(
@@ -55,7 +55,7 @@ class _ReviewPageState extends State<ReviewPage> {
   // Tambahkan fungsi deleteReview
   Future<void> deleteReview(int reviewId) async {
     final response = await http.delete(
-        Uri.parse('http://localhost:8000/review/api/review/$reviewId/delete/'));
+        Uri.parse('https://rasajogja-production.up.railway.app/review/api/review/$reviewId/delete/'));
 
     if (response.statusCode == 200) {
       // Jika berhasil, perbarui daftar review dengan memuat ulang
@@ -79,7 +79,7 @@ class _ReviewPageState extends State<ReviewPage> {
   Future<ReviewResponse> fetchReviews() async {
     final request = context.read<CookieRequest>();
     final response = await request.get(
-      'http://localhost:8000/review/api/product/${widget.productId}/reviews/',
+      'https://rasajogja-production.up.railway.app/review/api/product/${widget.productId}/reviews/',
     );
     return ReviewResponse.fromJson(response);
   }

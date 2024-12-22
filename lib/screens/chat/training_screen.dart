@@ -60,7 +60,7 @@ class _TrainingScreenState extends State<TrainingScreen>
 
   Future<List<User>> fetchUsers() async {
     try {
-      final url = Uri.parse('http://127.0.0.1:8000/chat/create-chat-flutter/');
+      final url = Uri.parse('https://rasajogja-production.up.railway.app/chat/create-chat-flutter/');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {

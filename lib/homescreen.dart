@@ -123,7 +123,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
               );
               try {
                 final response = await http.post(
-                  Uri.parse("http://localhost:8000/auth/logout/"),
+                  Uri.parse("https://rasajogja-production.up.railway.app/auth/logout/"),
                   headers: <String, String>{
                     'Content-Type': 'application/json',
                   },

@@ -69,7 +69,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
   Future<void> addBookmark(int productId) async {
     final url =
-        Uri.parse('http://127.0.0.1:8000/bookmark/add_flutter/$productId/');
+        Uri.parse('https://rasajogja-production.up.railway.app/bookmark/add_flutter/$productId/');
 
     try {
       final response = await http.post(
@@ -95,7 +95,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
   }
 
   Future<void> loadBookmarkedProducts() async {
-    final url = Uri.parse('http://127.0.0.1:8000/bookmark/list_flutter/');
+    final url = Uri.parse('https://rasajogja-production.up.railway.app/bookmark/list_flutter/');
 
     try {
       final response = await http.get(url, headers: {
@@ -119,7 +119,7 @@ class _ProductEntryPageState extends State<ProductEntryPage>
 
   Future<List<KatalogResponse>> fetchProduct(CookieRequest request) async {
     final response =
-        await request.get('http://127.0.0.1:8000/katalog/view_json/');
+        await request.get('https://rasajogja-production.up.railway.app/katalog/view_json/');
     var data = response['products'];
 
     List<KatalogResponse> listProduct = [];
