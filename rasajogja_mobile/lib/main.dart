@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:rasajogja_mobile/main_view.dart';
+import 'package:rasajogja_mobile/homescreen.dart';
 
 void main() {
   runApp(const MyApp());

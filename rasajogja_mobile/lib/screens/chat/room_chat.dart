@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:rasajogja_mobile/models/chat/message_entry.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MessageEntryFormPage extends StatefulWidget {
   final String chatId;
@@ -62,11 +64,58 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Room Chat'),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        toolbarHeight: 60,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            InkWell(
+              splashColor: Colors.white,
+              highlightColor: Colors.white,
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Row(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        child: Row(
+                          children: [
+                            SizedBox(width: 24),
+                            Image(
+                              width: 18,
+                              image: AssetImage('assets/images/back_icon.png'),
+                            ),
+                            SizedBox(width: 12),
+                            Text(
+                              "Room Chat",
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 1),
+                                fontSize: 18,
+                                height: 1,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 24),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        actions: const [
+          SizedBox(width: 20),
+        ],
       ),
       body: Column(
         children: [
@@ -79,36 +128,108 @@ class _MessageEntryFormPageState extends State<MessageEntryFormPage> {
                 final message = messages[index];
                 final bool isMe = message.fields.sender == user_loggedin;
 
-                return Align(
-                  alignment:
-                      isMe ? Alignment.centerRight : Alignment.centerLeft,
+                String defaultAvatar = 'assets/images/user_icon.png';
+                String defaultRoleName = message.fields.sender;
+                Color defaultColor = const Color.fromRGBO(229, 245, 244, 1);
+                Color defaultTextColor = Colors.black;
+                String defaultTextPrefix = '';
+                List<Widget> defaultIcons = [
+                  // _renderVoiceWidget(message),
+                  // const SizedBox(width: 6),
+                  // _renderShareWidget(message),
+                  // const SizedBox(width: 8),
+                  // _renderCopyWidget(message),
+                ];
+
+                Widget? customContent;
+
+                if (isMe) {
+                  defaultAvatar = 'assets/images/user_icon.png';
+                  defaultRoleName = message.fields.sender;
+                  defaultColor = const Color.fromRGBO(236, 236, 236, 1.0);
+                  defaultTextColor = Colors.black;
+                  defaultTextPrefix = '';
+                  defaultIcons = [
+                    // _renderVoiceWidget(message),
+                    // const SizedBox(width: 6),
+                    // _renderShareWidget(message),
+                    // const SizedBox(width: 8),
+                    // _renderCopyWidget(message),
+                  ];
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 12.0),
+                  // alignment:
+                  //     isMe ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 4.0),
-                    padding: const EdgeInsets.all(12.0),
+                    clipBehavior: Clip.antiAlias,
+                    padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
                     decoration: BoxDecoration(
-                      color: isMe ? Colors.blue[100] : Colors.grey[300],
-                      borderRadius: BorderRadius.circular(15.0),
+                      color: defaultColor,
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          message.fields.sender,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Image(
+                                      width: 36,
+                                      height: 36,
+                                      image: AssetImage(defaultAvatar),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    defaultRoleName,
+                                    softWrap: true,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      height: 24 / 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: defaultIcons,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(message.fields.content),
-                        const SizedBox(height: 4),
-                        Text(
-                          message.fields.timestamp.toIso8601String(),
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey[600],
-                          ),
+                        const SizedBox(height: 10),
+                        const Divider(
+                          height: 2,
+                          color: Color.fromRGBO(124, 119, 119, 1.0),
                         ),
+                        const SizedBox(height: 10),
+                        customContent ??
+                            MarkdownBody(
+                              data:
+                                  '$defaultTextPrefix${message.fields.content}',
+                              // data: 'This is a line\nThis is another line'.replaceAll('\n', '<br>'),
+                              shrinkWrap: true,
+                              selectable: true,
+                              styleSheet: MarkdownStyleSheet(
+                                textScaleFactor: 1.1,
+                                textAlign: WrapAlignment.start,
+                                p: TextStyle(
+                                  height: 1.5,
+                                  color: defaultTextColor,
+                                ),
+                              ),
+                            ),
                       ],
                     ),
                   ),

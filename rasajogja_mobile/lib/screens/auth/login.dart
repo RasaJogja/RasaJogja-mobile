@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:rasajogja_mobile/menu.dart';
+import 'package:rasajogja_mobile/homescreen.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MyHomePage()),
+          MaterialPageRoute(builder: (context) => FitnessAppHomeScreen()),
         );
 
         ScaffoldMessenger.of(context).showSnackBar(
