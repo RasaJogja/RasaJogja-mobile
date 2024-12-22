@@ -9,6 +9,7 @@ import '../../models/review/review_entry.dart';
 class ReviewPage extends StatefulWidget {
   final int productId;
   final String productName;
+  
 
   const ReviewPage({
     Key? key,
@@ -23,6 +24,27 @@ class ReviewPage extends StatefulWidget {
 class _ReviewPageState extends State<ReviewPage> {
   late Future<ReviewResponse> _reviews;
   bool _isNewestFirst = true;  // Add this line
+
+  // Tambahkan fungsi deleteReview
+  Future<void> deleteReview(int reviewId) async {
+    final response = await http.delete(
+      Uri.parse('http://localhost:8000/review/api/review/$reviewId/delete/')
+    );
+    
+    if (response.statusCode == 200) {
+      // Jika berhasil, perbarui daftar review dengan memuat ulang
+      setState(() {
+        _reviews = fetchReviews();
+      });
+    } else {
+      // Tampilkan pesan error jika penghapusan gagal
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete review')),
+      );
+    }
+  }
+
+
 
   @override
   void initState() {
@@ -44,6 +66,8 @@ class _ReviewPageState extends State<ReviewPage> {
           ? b.time.compareTo(a.time)
           : a.time.compareTo(b.time));
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -166,10 +190,35 @@ class _ReviewPageState extends State<ReviewPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 8), // Jarak antara Row di atas dan teks review
                             Text(
                               review.reviewText,
                               style: const TextStyle(fontSize: 15),
+                            ),
+                            const SizedBox(height: 16), // Jarak antara teks review dan tombol delete
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end, // Memindahkan tombol ke kanan
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFAB886D),
+                                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    deleteReview(review.id);
+                                  },
+                                  child: const Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      color: Colors.white, // Teks putih
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
