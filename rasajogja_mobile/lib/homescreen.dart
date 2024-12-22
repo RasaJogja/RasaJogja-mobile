@@ -1,10 +1,13 @@
 import 'package:rasajogja_mobile/models/mainpage/tabIcon_data.dart';
 import 'package:flutter/material.dart';
+import 'package:rasajogja_mobile/screens/auth/login.dart';
 import 'package:rasajogja_mobile/screens/forum/forum_page.dart';
 import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/bottom_bar_view.dart';
 import 'package:rasajogja_mobile/utils/mainpage_theme.dart';
 import 'package:rasajogja_mobile/screens/mainpage/mainpage.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {
   @override
@@ -79,7 +82,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
         BottomBarView(
           tabIconsList: tabIconsList,
           addClick: () {},
-          changeIndex: (int index) {
+          changeIndex: (int index) async {
             if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
@@ -109,14 +112,56 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
                 });
               });
             } else if (index == 3) {
-              animationController?.reverse().then<dynamic>((data) {
-                if (!mounted) {
-                  return;
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              );
+              try {
+                final response = await http.post(
+                  Uri.parse("http://localhost:8000/auth/logout/"),
+                  headers: <String, String>{
+                    'Content-Type': 'application/json',
+                  },
+                );
+
+                Navigator.pop(context);
+
+                if (response.statusCode == 200) {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          LoginPage(controller: PageController()),
+                    ),
+                    (route) => false,
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Logout failed. Please try again.'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
-                setState(() {
-                  tabBody = const ProductEntryPage();
-                });
-              });
+              } catch (e) {
+                Navigator.pop(context);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content:
+                        Text('Network error. Please check your connection.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             }
           },
         ),
