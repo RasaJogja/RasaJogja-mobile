@@ -1,4 +1,5 @@
 import 'package:rasajogja_mobile/screens/bookmark/bookmark_entry.dart';
+import 'package:rasajogja_mobile/screens/katalog/list_productentry.dart';
 import 'package:rasajogja_mobile/utils/mainpage_theme.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/title_view.dart';
 import 'package:rasajogja_mobile/widgets/mainpage/mediterranean_diet_view.dart';
@@ -61,14 +62,25 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     const int count = 9;
 
     listViews.add(
-      TitleView(
-        titleTxt: "Today's Culinary",
-        subTxt: 'More',
-        animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: widget.animationController!,
-            curve: const Interval((1 / count) * 2, 1.0,
-                curve: Curves.fastOutSlowIn))),
-        animationController: widget.animationController!,
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+          );
+        },
+        child: TitleView(
+          titleTxt: "Today's Culinary",
+          subTxt: 'More',
+          animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(
+              parent: widget.animationController!,
+              curve: const Interval((1 / count) * 2, 1.0,
+                  curve: Curves.fastOutSlowIn),
+            ),
+          ),
+          animationController: widget.animationController!,
+        ),
       ),
     );
 
@@ -278,30 +290,14 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_left,
-                                    color: FitnessAppTheme.grey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(
+                            Padding(
+                              padding: const EdgeInsets.only(
                                 left: 8,
                                 right: 8,
                               ),
                               child: Row(
                                 children: <Widget>[
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(right: 8),
                                     child: Icon(
                                       Icons.bookmark,
@@ -309,34 +305,28 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                       size: 18,
                                     ),
                                   ),
-                                  Text(
-                                    'Your Fave!',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: FitnessAppTheme.fontName,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 18,
-                                      letterSpacing: -0.2,
-                                      color: FitnessAppTheme.darkerText,
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BookmarkPage()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Your Fave!',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: FitnessAppTheme.fontName,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 18,
+                                        letterSpacing: -0.2,
+                                        color: FitnessAppTheme.darkerText,
+                                      ),
                                     ),
-                                  ),
+                                  )
                                 ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 38,
-                              width: 38,
-                              child: InkWell(
-                                highlightColor: Colors.transparent,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(32.0)),
-                                onTap: () {},
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: FitnessAppTheme.grey,
-                                  ),
-                                ),
                               ),
                             ),
                           ],
