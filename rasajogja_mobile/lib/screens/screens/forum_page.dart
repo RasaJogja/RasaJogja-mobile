@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:rasajogja_mobile/models/forum/forum_model.dart';
-import 'package:rasajogja_mobile/screens/forum/add_new_form_page.dart';
-import 'package:rasajogja_mobile/screens/forum/forum_detail.dart';
-import 'package:rasajogja_mobile/widgets/forum/top_places.dart';
+import 'package:rasajogja_mobile/forum/models/forum_model.dart';
+import 'package:rasajogja_mobile/forum/screens/add_new_form_page.dart';
+import 'package:rasajogja_mobile/forum/screens/forum_detail.dart';
+import 'package:rasajogja_mobile/forum/widgets/top_places.dart';
 import 'package:rasajogja_mobile/widgets/left_drawer.dart';
 
 class ForumPage extends StatefulWidget {
@@ -52,12 +52,13 @@ class _ForumPageState extends State<ForumPage> {
           _forumFuture = fetchForums(request);
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Forum deleted successfully')),
+          const SnackBar(content: Text('Forum berhasil dihapus')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text(response['message'] ?? 'Failed to delete forum')),
+              content:
+                  Text(response['message'] ?? 'Gagal menghapus forum')),
         );
       }
     } catch (e) {
@@ -73,18 +74,19 @@ class _ForumPageState extends State<ForumPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Hapus Forum"),
-          content: const Text("Apakah Anda yakin ingin menghapus forum ini?"),
+          content:
+              const Text("Apakah Anda yakin ingin menghapus forum ini?"),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text("Batal"),
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                _deleteForum(forum);
+                Navigator.of(context).pop(); // Close the dialog
+                _deleteForum(forum); // Perform delete
               },
               child: const Text(
                 "Hapus",
@@ -133,98 +135,123 @@ class _ForumPageState extends State<ForumPage> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
-                child: Text(
-                  'Belum ada forum, tambahkan sekarang!',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
+              return const CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: TopPlacesSection(),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Text(
+                        'Belum ada forum, tambahkan sekarang!',
+                        style:
+                            TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                ],
               );
             } else {
               final forums = snapshot.data!;
-              return GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1.2,
-                ),
-                physics: const AlwaysScrollableScrollPhysics(), // Ditambahkan
-                itemCount: forums.length,
-                itemBuilder: (context, index) {
-                  final forum = forums[index];
-                  return Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ForumDetailPage(forum: forum),
-                          ),
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  forum.fields.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF5B4636),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  forum.fields.description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFF5B4636),
-                                  ),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  '${forum.fields.commentsCount} Komentar',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xFF5B4636),
-                                  ),
-                                ),
-                              ],
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: TopPlacesSection(),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    sliver: SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: 1.2,
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final forum = forums[index];
+                          return Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ),
-                          if (forum.fields.isAuthor)
-                            Positioned(
-                              top: 8,
-                              right: 8,
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () {
-                                  _showDeleteConfirmationDialog(forum);
-                                },
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ForumDetailPage(forum: forum),
+                                  ),
+                                );
+                              },
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          forum.fields.title,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF5B4636),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          forum.fields.description,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color(0xFF5B4636),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          '${forum.fields.commentsCount} Komentar',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xFF5B4636),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (forum.fields.isAuthor)
+                                    Positioned(
+                                      top: 8,
+                                      right: 8,
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ),
+                                        onPressed: () {
+                                          _showDeleteConfirmationDialog(
+                                              forum);
+                                        },
+                                      ),
+                                    ),
+                                ],
                               ),
                             ),
-                        ],
+                          );
+                        },
+                        childCount: forums.length,
                       ),
                     ),
-                  );
-                },
+                  ),
+                ],
               );
             }
           },
