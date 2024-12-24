@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:provider/provider.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class AddReviewPage extends StatefulWidget {
   final int productId;
@@ -21,7 +20,6 @@ class _AddReviewPageState extends State<AddReviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -71,27 +69,52 @@ class _AddReviewPageState extends State<AddReviewPage> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    final response = await request.post(
-                      'http://localhost:8000/review/api/product/${widget.productId}/add/',
-                      jsonEncode({
-                        'review_text': _reviewController.text,
-                      }),
-                    );
+                    try {
+                      final response = await http.post(
+                        Uri.parse(
+                            'http://127.0.0.1:8000/review/api/product/${widget.productId}/add/'),
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: jsonEncode({
+                          'review_text': _reviewController.text,
+                        }),
+                      );
 
-                    if (context.mounted) {
-                      if (response['status'] == 'success') {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Review added successfully!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
-                        Navigator.pop(context, true);
-                      } else {
+                      if (context.mounted) {
+                        if (response.statusCode == 200) {
+                          final responseData = jsonDecode(response.body);
+                          if (responseData['status'] == 'success') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Review added successfully!'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                            Navigator.pop(context, true);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'Error: ${responseData['message'] ?? "Unknown error occurred"}'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Error: Failed to add review'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
-                                'Error: ${response['message'] ?? "Unknown error occurred"}'),
+                            content: Text('Error: ${e.toString()}'),
                             backgroundColor: Colors.red,
                           ),
                         );

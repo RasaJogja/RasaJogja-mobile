@@ -62,7 +62,30 @@ class _BookmarkPageState extends State<BookmarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bookmarks'),
+        title: const Text(
+          'Bookmarks',
+          style: TextStyle(
+            color: Colors.white, // Mengubah warna teks judul menjadi putih
+            fontWeight: FontWeight.bold, // Menambahkan fontWeight untuk bold
+          ),
+        ),
+        backgroundColor:
+            Colors.transparent, // Membuat background AppBar transparan
+        elevation: 0, // Menghilangkan bayangan default AppBar
+        iconTheme: const IconThemeData(
+            color: Colors.white), // Mengubah warna ikon menjadi putih
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF9C6F4A),
+                Color(0xFFC89F94),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder<List<BookmarkedProduct>>(
         future: fetchBookmarks(),

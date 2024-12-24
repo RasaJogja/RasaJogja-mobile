@@ -107,16 +107,18 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15, top: 15),
-                child: Image.asset(
-                  "assets/images/vector-1.png",
-                  width: 413,
-                  height: 457,
-                ),
+              Image.asset(
+                "assets/images/vector-0.png",
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
               ),
-              const SizedBox(
-                height: 18,
+              Padding(
+                padding: const EdgeInsets.only(top: 40, left: 20),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -127,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     const Text(
                       'Log In',
                       style: TextStyle(
-                        color: Color(0xFF755DC1),
+                        color: Color(0xFF8D6E63),
                         fontSize: 27,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
@@ -154,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(
                         labelText: 'Username',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -170,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -197,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: const InputDecoration(
                         labelText: 'Password',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -213,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -230,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed:
                               _isLoading ? null : () => _handleLogin(context),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF9F7BFF),
+                            backgroundColor: const Color(0xFF8D6E63),
                           ),
                           child: _isLoading
                               ? const SizedBox(
@@ -281,7 +283,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Text(
                             'Sign Up',
                             style: TextStyle(
-                              color: Color(0xFF755DC1),
+                              color: Color(0xFF8D6E63),
                               fontSize: 13,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,

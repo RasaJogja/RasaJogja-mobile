@@ -27,12 +27,17 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Image.asset(
+              "assets/images/vector-0.png",
+              width: double.infinity,
+              height: 250,
+              fit: BoxFit.cover,
+            ),
             Padding(
-              padding: const EdgeInsets.only(top: 0),
-              child: Image.asset(
-                "assets/images/vector-2.png",
-                width: 428,
-                height: 457,
+              padding: const EdgeInsets.only(top: 40, left: 20),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.pop(context),
               ),
             ),
             const SizedBox(
@@ -47,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const Text(
                     'Sign up',
                     style: TextStyle(
-                      color: Color(0xFF755DC1),
+                      color: Color(0xFF8D6E63),
                       fontSize: 27,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
@@ -70,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Username',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -86,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -120,7 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontWeight: FontWeight.w400,
                             ),
                             labelStyle: TextStyle(
-                              color: Color(0xFF755DC1),
+                              color: Color(0xFF8D6E63),
                               fontSize: 15,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -138,7 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF9F7BFF),
+                                color: Color(0xFF8D6E63),
                               ),
                             ),
                           ),
@@ -166,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontWeight: FontWeight.w400,
                             ),
                             labelStyle: TextStyle(
-                              color: Color(0xFF755DC1),
+                              color: Color(0xFF8D6E63),
                               fontSize: 15,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -184,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   BorderRadius.all(Radius.circular(10)),
                               borderSide: BorderSide(
                                 width: 1,
-                                color: Color(0xFF9F7BFF),
+                                color: Color(0xFF8D6E63),
                               ),
                             ),
                           ),
@@ -209,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -225,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -247,7 +252,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         labelStyle: TextStyle(
-                          color: Color(0xFF755DC1),
+                          color: Color(0xFF8D6E63),
                           fontSize: 15,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
@@ -263,7 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide(
                             width: 1,
-                            color: Color(0xFF9F7BFF),
+                            color: Color(0xFF8D6E63),
                           ),
                         ),
                       ),
@@ -328,7 +333,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF9F7BFF),
+                          backgroundColor: const Color(0xFF8D6E63),
                         ),
                         child: const Text(
                           'Create account',
@@ -369,7 +374,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Text(
                           'Log In ',
                           style: TextStyle(
-                            color: Color(0xFF755DC1),
+                            color: Color(0xFF8D6E63),
                             fontSize: 13,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
