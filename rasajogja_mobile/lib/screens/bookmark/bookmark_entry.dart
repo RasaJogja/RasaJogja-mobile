@@ -2,6 +2,38 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+// Model untuk BookmarkedProduct
+class BookmarkedProduct {
+  final int id;
+  final String nama;
+  final String kategori;
+  final String harga;
+  final String namaRestoran;
+  final String lokasi;
+  final String urlGambar;
+
+  BookmarkedProduct({
+    required this.id,
+    required this.nama,
+    required this.kategori,
+    required this.harga,
+    required this.namaRestoran,
+    required this.lokasi,
+    required this.urlGambar,
+  });
+
+  factory BookmarkedProduct.fromJson(Map<String, dynamic> json) =>
+      BookmarkedProduct(
+        id: json["id"],
+        nama: json["nama"],
+        kategori: json["kategori"],
+        harga: json["harga"],
+        namaRestoran: json["nama_restoran"],
+        lokasi: json["lokasi"],
+        urlGambar: json["url_gambar"],
+      );
+}
+
 class BookmarkPage extends StatefulWidget {
   const BookmarkPage({super.key});
 
@@ -33,8 +65,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
   }
 
   Future<void> deleteBookmark(int productId) async {
-    final url =
-        Uri.parse('http://127.0.0.1:8000/bookmark/remove_flutter/$productId/');
+    final url = Uri.parse(
+        'http://127.0.0.1:8000/bookmark/remove_flutter/$productId/');
     try {
       final response = await http.post(url);
 
@@ -61,8 +93,30 @@ class _BookmarkPageState extends State<BookmarkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Modifikasi AppBar di sini
       appBar: AppBar(
-        title: const Text('Bookmarks'),
+        title: const Text(
+          'Bookmarks',
+          style: TextStyle(
+            color: Colors.white, // Mengubah warna teks judul menjadi putih
+            fontWeight: FontWeight.bold, // Menambahkan fontWeight untuk bold
+          ),
+        ),
+        backgroundColor: Colors.transparent, // Membuat background AppBar transparan
+        elevation: 0, // Menghilangkan bayangan default AppBar
+        iconTheme: const IconThemeData(color: Colors.white), // Mengubah warna ikon menjadi putih
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF9C6F4A),
+                Color(0xFFC89F94),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: FutureBuilder<List<BookmarkedProduct>>(
         future: fetchBookmarks(),
@@ -98,7 +152,10 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     ),
                     title: Text(
                       product.nama,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black, // Pastikan teks judul tetap hitam
+                      ),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,35 +205,4 @@ class _BookmarkPageState extends State<BookmarkPage> {
       ),
     );
   }
-}
-
-class BookmarkedProduct {
-  final int id;
-  final String nama;
-  final String kategori;
-  final String harga;
-  final String namaRestoran;
-  final String lokasi;
-  final String urlGambar;
-
-  BookmarkedProduct({
-    required this.id,
-    required this.nama,
-    required this.kategori,
-    required this.harga,
-    required this.namaRestoran,
-    required this.lokasi,
-    required this.urlGambar,
-  });
-
-  factory BookmarkedProduct.fromJson(Map<String, dynamic> json) =>
-      BookmarkedProduct(
-        id: json["id"],
-        nama: json["nama"],
-        kategori: json["kategori"],
-        harga: json["harga"],
-        namaRestoran: json["nama_restoran"],
-        lokasi: json["lokasi"],
-        urlGambar: json["url_gambar"],
-      );
 }

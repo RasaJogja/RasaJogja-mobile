@@ -402,10 +402,29 @@ class _ProductEntryPageState extends State<ProductEntryPage>
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      // Modifikasi AppBar di sini
       appBar: AppBar(
-        title: const Text("Today's Culinary"),
-        backgroundColor: colorScheme.primary,
-        elevation: 0,
+        title: const Text(
+          "Today's Culinary",
+          style: TextStyle(
+            color: Colors.white, // Mengubah warna teks judul menjadi putih
+            fontWeight: FontWeight.bold, // Menambahkan fontWeight untuk bold
+          ),
+        ),
+        backgroundColor: Colors.transparent, // Membuat background AppBar transparan
+        elevation: 0, // Menghilangkan bayangan default AppBar
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF9C6F4A),
+                Color(0xFFC89F94),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -446,8 +465,8 @@ class _ProductEntryPageState extends State<ProductEntryPage>
                   return GridView.builder(
                     padding: const EdgeInsets.all(8), // Kurangi padding grid
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: MediaQuery.of(context).size.width ~/
-                          200, // Perkecil kartu
+                      crossAxisCount: MediaQuery.of(context).size.width ~/ 200,
+                      // Perkecil kartu
                       childAspectRatio: 0.7, // Proporsi kartu lebih ramping
                       crossAxisSpacing:
                           8, // Kurangi jarak horizontal antar kartu
