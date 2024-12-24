@@ -103,3 +103,6 @@ Saat menghubungkan Django dengan Flutter, kami akan melakukan beberapa langkah b
 2. Menggunakan Sistem Autentikasi: Fitur login, logout, dan registrasi yang sudah dibuat sebelumnya akan diterapkan. Sistem ini memastikan setiap pengguna mendapatkan akses sesuai dengan perannya, apakah sebagai pembaca atau penulis.
 3. Mengelola Cookie dengan pbp_django_auth: Library ini akan membantu mengatur cookie autentikasi, sehingga setiap permintaan yang dikirim ke server berasal dari pengguna yang sudah terverifikasi dan punya izin yang benar.
 4. Membuat Kelas Katalog di Flutter: Kami akan membuat kelas Katalog menggunakan data produk makanan dari API. Untuk mempermudah, kami akan menggunakan alat https://app.quicktype.io/ untuk mengonversi data JSON menjadi objek Dart yang siap digunakan.
+
+## LINK DEPLOY APPCENTER
+https://install.appcenter.ms/orgs/rasajogjamobile/apps/rasa-jogja-mobile/distribution_groups/public/releases/3
